@@ -19,6 +19,7 @@
   "homepage": "https://github.com/b-bryant18/OctoberAPI#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "joi": "^17.2.1",
     "nodemon": "^2.0.6"
   }
 }

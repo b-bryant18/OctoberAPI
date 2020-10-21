@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+//Middleware
+app.use(express.json());
+
 const courses = [
     {
         id: 1,
@@ -24,6 +27,25 @@ app.get('/api/courses', (req, res) => {
     res.send(courses)
 });
 
+//Post to courses array
+app.post('/api/courses', (req, res) => {
+    if (!req.body.name || req.body.length < 3) {
+        //400 Bad request
+        res.status(400).send('Course name is required. Name must be at least 3 characters')
+    }
+    const course = {
+        id: courses.length + 1,
+        name: req.body.name
+    };
+    //New course is pushed to courses array
+    courses.push(course);
+    //New course is sent to user
+    res.send(course);
+});
+//Use Postman to check routes using localhost3000/api/courses
+//Don't need to specify ID for new course, just name
+//ex. { "name" : "New Course"}
+
 app.get('/api/courses/:id', (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id));
     //All arrays have the find method, use courses.find
@@ -32,8 +54,8 @@ app.get('/api/courses/:id', (req, res) => {
     res.send(course);
 });
 
-//req.params object is :year/:month. Essential/required parameters.
-//Query string parameters follow a question mark. These are optional. req.query
+//req.params object is :id. Essential/required parameters.
+//req.query is a Query string parameter. These follow a question mark & are optional.
 //ex. ?SortBy=name
 
 // PORT
