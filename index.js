@@ -2,11 +2,15 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-    res.send('What is going on?')
+    res.send('Hello world!')
 });
 
 app.get('/api/courses', (req, res) => {
     res.send([1, 2, 3, 4, 5])
+});
+
+app.get('/api/courses/:id', (req, res) => {
+    res.send(req.params.id);
 });
 
 // PORT
