@@ -24,27 +24,25 @@ app.get('/', (req, res) => {
     res.send('Hello world!')
 });
 
+//Find all courses
 app.get('/api/courses', (req, res) => {
     res.send(courses)
 });
 
 //Post to courses array
 app.post('/api/courses', (req, res) => {
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
-    });
-
-    const result = schema.validate(req.body);
-
-    if (result.error) {
-        //400 Bad request
-        res.status(400).send(result.error.details[0].message)
+    //Runs validateCourse function (below) to check course name min length
+    //Else returns status 400 Bad Request
+    const { error } = validateCourse(req.body);
+    if (error) {
+        res.status(400).send(error.details[0].message)
     }
 
     const course = {
         id: courses.length + 1,
         name: req.body.name
     };
+    //Finds current length of courses array and +1 to it to create ID for new course
 
     courses.push(course);
     res.send(course);
@@ -55,9 +53,35 @@ app.post('/api/courses', (req, res) => {
 //Don't need to specify ID for new course, just name
 //ex. { "name" : "New Course"}
 
+//Update course
+app.put('/api/courses/:id', (req, res) => {
+    //Look up the course
+    //If not existing return 404
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+    if (!course) res.status(404).send('The course with the given ID was not found');
+
+    //Runs validateCourse function (below) on the request
+    const { error } = validateCourse(req.body);
+    if (error) {
+        res.status(400).send(error.details[0].message)
+    }
+
+    //Update course & return updated course
+    course.name = req.body.name;
+    res.send(course);
+});
+
+//Checks if course name meets min length requirement
+function validateCourse(course) {
+    const schema = Joi.object({
+        name: Joi.string().min(3).required()
+    });
+    return schema.validate(course);
+}
+
 app.get('/api/courses/:id', (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id));
-    //All arrays have the find method, use courses.find
+    //All arrays can use the find method,like courses.find
     //Need to use parseInt otherwise req.params.id would return a string
     if (!course) res.status(404).send('The course with the given ID was not found');
     res.send(course);
