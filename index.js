@@ -45,10 +45,11 @@ app.post('/api/courses', (req, res) => {
         id: courses.length + 1,
         name: req.body.name
     };
-    //New course is pushed to courses array
+
     courses.push(course);
-    //New course is sent to user
     res.send(course);
+    //New course is pushed to courses array
+    //New course is sent to user
 });
 //Use Postman to check routes using localhost3000/api/courses
 //Don't need to specify ID for new course, just name
