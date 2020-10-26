@@ -29,7 +29,7 @@ app.get('/api/courses', (req, res) => {
     res.send(courses)
 });
 
-//Post to courses array
+//Create new course
 app.post('/api/courses', (req, res) => {
     //Runs validateCourse function (below) to check course name min length
     //Else returns status 400 Bad Request
@@ -58,13 +58,13 @@ app.put('/api/courses/:id', (req, res) => {
     //Look up the course
     //If not existing return 404
     const course = courses.find(c => c.id === parseInt(req.params.id));
-    if (!course) res.status(404).send('The course with the given ID was not found');
+    if (!course) return res.status(404).send('The course with the given ID was not found');
+    //This prevents any further code from running
+
 
     //Runs validateCourse function (below) on the request
     const { error } = validateCourse(req.body);
-    if (error) {
-        res.status(400).send(error.details[0].message)
-    }
+    if (error) return res.status(400).send(error.details[0].message)
 
     //Update course & return updated course
     course.name = req.body.name;
@@ -79,11 +79,32 @@ function validateCourse(course) {
     return schema.validate(course);
 }
 
+// Find course by ID
 app.get('/api/courses/:id', (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id));
     //All arrays can use the find method,like courses.find
     //Need to use parseInt otherwise req.params.id would return a string
     if (!course) res.status(404).send('The course with the given ID was not found');
+    res.send(course);
+});
+
+// Delete course
+app.delete('/api/courses/:id', (req, res) => {
+    // Look up the course
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+
+    //If course doesn't exist, return error 404
+    if (!course) res.status(404).send('The course with the given ID was not found');
+
+
+    //Delete
+    //Finds the index of the desired course in courses array
+    const index = courses.indexOf(course);
+    courses.splice(index, 1);
+    //splice removes objects from arrays
+    //Go to that index & remove 1 object
+
+    //Return courses array (after desired object has been deleted)
     res.send(course);
 });
 
