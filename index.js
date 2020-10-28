@@ -43,7 +43,6 @@ app.post('/api/courses', (req, res) => {
         name: req.body.name
     };
     //Finds current length of courses array and +1 to it to create ID for new course
-
     courses.push(course);
     res.send(course);
     //New course is pushed to courses array
