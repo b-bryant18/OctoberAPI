@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Builder</title>
+    <script src="https://code.jquery.com/jquery.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3><strong>Add a New Course</strong></h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" role="form">
+
+                    <div class="form-group">
+                        <label for="name">Course Name:</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                </form>
+                <br>
+                <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Add
+                    to Course Array</button>
+            </div>
+
+            <script type="text/javascript">
+                $("#add-btn").on("click", function (event) {
+                    event.preventDefault();
+                    var course = {
+                        name: $("#name").val().trim()
+                    };
+                    //Creates a new character whose info is saved to var newCharacter when the add button is clicked.
+
+                    // Question: What does this code do??
+                    $.post("/api/courses", course)
+                        .then(function (data) {
+                            console.log("add.html", data);
+                            alert("Adding character...");
+                        });
+                    //Sends a post req containg newCharacter to /api/characters 
+                    //But does NOT post that character to the characters array, only sends an alert. 
+                });
+            </script>
+
+</body>
+
+</html>

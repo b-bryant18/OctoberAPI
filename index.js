@@ -34,9 +34,8 @@ app.post('/api/courses', (req, res) => {
     //Runs validateCourse function (below) to check course name min length
     //Else returns status 400 Bad Request
     const { error } = validateCourse(req.body);
-    if (error) {
-        res.status(400).send(error.details[0].message)
-    }
+    if (error) return res.status(400).send(error.details[0].message)
+
 
     const course = {
         id: courses.length + 1,
@@ -84,7 +83,7 @@ app.get('/api/courses/:id', (req, res) => {
     const course = courses.find(c => c.id === parseInt(req.params.id));
     //All arrays can use the find method,like courses.find
     //Need to use parseInt otherwise req.params.id would return a string
-    if (!course) res.status(404).send('The course with the given ID was not found');
+    if (!course) return res.status(404).send('The course with the given ID was not found');
     res.send(course);
 });
 
