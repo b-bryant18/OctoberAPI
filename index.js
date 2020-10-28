@@ -27,7 +27,8 @@ app.get('/', (req, res) => {
 
 //Find all courses
 app.get('/api/courses', (req, res) => {
-    res.send(courses)
+    res.sendFile(path.join(__dirname, "view.html"));
+    // res.send(courses)
 });
 
 //Create new course
