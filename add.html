@@ -5,47 +5,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Builder</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h3><strong>Add a New Course</strong></h3>
-            </div>
-            <div class="card-body">
-                <form method="POST" role="form">
+        <div class="jumbotron">
+            <h1>Star Wars Express</h1>
+            <h3>The greatest resource in the galaxy for Star Wars statistics!</h3>
+            <hr>
+            <a href="/api/courses"><button class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> All
+                    Courses</button></a>
+        </div>
+        <div class="row">
 
-                    <div class="form-group">
-                        <label for="name">Course Name:</label>
-                        <input type="text" class="form-control" id="name">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><strong>Add Characters</strong></h3>
                     </div>
-                </form>
-                <br>
-                <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Add
-                    to Course Array</button>
-                <a href="/api/courses"><button class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> All
-                        Courses</button></a>
+                    <div class="card-body">
+                        <form method="POST" role="form">
+
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <input type="text" class="form-control" id="role">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="text" class="form-control" id="age">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="force-points">Force Points</label>
+                                <input type="text" class="form-control" id="force-points">
+                            </div>
+
+                        </form>
+                        <br>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span
+                                    class="fa fa-fire"></span> Add to
+                                the Force</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </div>
+    </div>
 
-            <script type="text/javascript">
-                $("#add-btn").on("click", function (event) {
-                    event.preventDefault();
-                    var course = {
-                        name: $("#name").val().trim()
-                    };
-                    //Saves entered name to var course.
+    <script type="text/javascript">
+        $("#add-btn").on("click", function (event) {
+            event.preventDefault();
+            var course = {
+                name: $("#name").val().trim()
+            };
+            //Saves entered name to var course.
 
-                    $.post("/api/courses", course)
-                        .then(function (data) {
-                            console.log("add.html", data);
-                            alert("Adding course...");
-                        });
-                    //Sends a post req containg newCharacter to /api/characters 
-                    //But does NOT post that character to the characters array, only sends an alert. 
+            $.post("/api/courses", course)
+                .then(function (data) {
+                    console.log("add.html", data);
+                    alert("Adding course...");
                 });
-            </script>
+            //Sends a post req containg newCharacter to /api/characters 
+            //But does NOT post that character to the characters array, only sends an alert. 
+        });
+    </script>
 
 </body>
 
