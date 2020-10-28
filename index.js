@@ -21,14 +21,19 @@ const courses = [
     }
 ];
 
+//Get Add Courses Page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "add.html"));
 });
 
+//Get View Courses Page
+// app.get('/view', (req, res) => {
+//     res.sendFile(path.join(__dirname, "view.html"));
+// });
+
 //Find all courses
 app.get('/api/courses', (req, res) => {
-    res.sendFile(path.join(__dirname, "view.html"));
-    // res.send(courses)
+    res.send(courses)
 });
 
 //Create new course
