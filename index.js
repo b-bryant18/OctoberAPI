@@ -26,11 +26,6 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "add.html"));
 });
 
-//Get View Courses Page
-// app.get('/view', (req, res) => {
-//     res.sendFile(path.join(__dirname, "view.html"));
-// });
-
 //Find all courses
 app.get('/api/courses', (req, res) => {
     res.send(courses)
@@ -56,7 +51,7 @@ app.post('/api/courses', (req, res) => {
 });
 //Use Postman to check routes using localhost3000/api/courses
 //Don't need to specify ID for new course, just name
-//ex. { "name" : "New Course"}
+//ex. { "name" : "Computer Science"}
 
 //Update course
 app.put('/api/courses/:id', (req, res) => {
